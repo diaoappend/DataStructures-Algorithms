@@ -3,7 +3,7 @@ package com.diao.datastructures.queue;
 /**
  * @author: Chenzhidiao
  * @date: 2019/12/31 15:55
- * @description:
+ * @description:环形队列
  * @version: 1.0
  */
 public class CircleArrayQueue {

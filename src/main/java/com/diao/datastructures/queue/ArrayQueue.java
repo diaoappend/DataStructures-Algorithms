@@ -3,7 +3,7 @@ package com.diao.datastructures.queue;
 /**
  * @author: Chenzhidiao
  * @date: 2019/12/31 14:21
- * @description:
+ * @description:基于数组实现队列
  * @version: 1.0
  */
 
