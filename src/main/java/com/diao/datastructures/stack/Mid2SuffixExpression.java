@@ -29,7 +29,7 @@ public class Mid2SuffixExpression {
      */
     public static void main(String[] args) {
 
-        String infixExpression = "1+((2+3)*4)-5";
+        String infixExpression = "1+2+(3*(4+5-(6+7)+8)-9)+10";
         List<String> list = infixExpression2List(infixExpression);
         System.out.println(list);
         List<String> suffixList = infix2SuffixExpressionList(list);
@@ -55,7 +55,7 @@ public class Mid2SuffixExpression {
             } else {
                 str = "";//先将str置空
                 //这里判断i的范围是因为内层循环结束后才会判断外层循环条件，如果不加会在内层循环时出现下标越界
-                while (i < infixExpression.length() && (ch = infixExpression.charAt(i)) > 48 && (ch = infixExpression.charAt(i)) < 57) {
+                while (i < infixExpression.length() && (ch = infixExpression.charAt(i)) >= 48 && (ch = infixExpression.charAt(i)) <= 57) {
                     str += ch;//拼接多位数
                     i++;
                 }
