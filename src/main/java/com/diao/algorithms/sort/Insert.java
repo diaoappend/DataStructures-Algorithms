@@ -4,6 +4,8 @@ package com.diao.algorithms.sort;
  * @author: Chenzhidiao
  * @date: 2020/1/9 10:42
  * @description:插入排序
+ * 时间复杂度：O(n^2)
+ * 空间复杂度：O(1)
  * @version: 1.0
  */
 public class Insert {
