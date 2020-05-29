@@ -28,9 +28,12 @@ public class HeapSort {
             arr[j] = arr[0];
             arr[0] = tmp;
             //继续调整结构
-            adjustHeap(arr, 0, j);//不理解
+            //这里由于交换了堆顶和数组末尾元素，最上面的局部子树不再满足大顶堆，
+            //然后从上向下调整树为大顶堆，而这个顶部子树的非叶子节点下标就是0（堆顶元素）
+            adjustHeap(arr, 0, j);
         }
         System.out.println("数组:" + Arrays.toString(arr));
+
     }
 
     /**
@@ -53,7 +56,7 @@ public class HeapSort {
             }
             if (arr[k] > tmp) {//说明左（或者右）子节点的值大于父节点
                 arr[i] = arr[k];//把较大的值赋给父节点
-                i = k;//!!!  i指向k，继续循环比较
+                i = k;//!!!  i指向k，继续循环比较（因为上面临时变量保存的是arr[i]的值，所有要更新i的值为k）
             } else {
                 break;
             }

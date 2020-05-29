@@ -57,7 +57,7 @@ public class ArrayStack {
         }
     }
 
-    //返回运算符的优先级，优先级游程序员来确定，优先级使用数字表示，数字越大，优先级越高
+    //返回运算符的优先级，优先级由程序员来确定，优先级使用数字表示，数字越大，优先级越高
     public int priority(int oper) {
         if (oper == '(' || oper == ')') {
             return 2;

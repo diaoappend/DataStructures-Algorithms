@@ -36,7 +36,6 @@ public class Select {
     }
 
     public static int[] selectSort(int[] arr) {
-        int tmp = 0;
         for (int i = 0; i < arr.length - 1; i++) {
             int minIndex = i;
             int min = arr[i];

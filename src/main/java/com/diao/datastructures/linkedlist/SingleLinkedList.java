@@ -147,7 +147,7 @@ public class SingleLinkedList {
         }
         Node tem = headNode.next;
         while (true) {
-            if (tem == null) {
+            if (tem == null) {//必须是tem为null，如果判断条件为tem.next==null，最后一个节点无法遍历
                 break;
             }
             System.out.println(tem.toString());
@@ -220,7 +220,6 @@ public class SingleLinkedList {
         //初始化一个新的头节点reverseHeadNode,并定义当前节点current和其下一个节点next
         Node reverseHeadNode = new Node(0, "", "");
         Node current = oldHeadNode.next;
-        Node pre = null;
         Node next = null;
         //遍历原来的链表，每遍历一个节点，将其取出，并放在新的链表reverseHead的最前端
         while (current != null) {
@@ -258,7 +257,7 @@ public class SingleLinkedList {
         list.addNodeByNo(new Node(3, "wuyong", "zhiduoxing"));
         list.addNodeByNo(new Node(2, "lujunyi", "yuqilin"));
         list.showLinkedList();
-        reversePrint(list.headNode);
+        //reversePrint(list.headNode);
     }
 }
 
