@@ -234,19 +234,20 @@ public class SingleLinkedList {
     /**
      * 逆序打印单向链表
      * 思路：①将链表反转，然后遍历打印，但会破坏原链表的结构，不建议；②遍历链表将节点依次加入栈中，然后用栈先进后出的特点实现逆序打印
+     *
      * @param headNode
      */
     public static void reversePrint(Node headNode) {
-        if (null == headNode.next ) {
+        if (null == headNode.next) {
             return;
         }
         Node current = headNode.next;
         Stack<Node> stack = new Stack<Node>();
-        while (current != null){
-           stack.push(current);
-           current=current.next;
+        while (current != null) {
+            stack.push(current);
+            current = current.next;
         }
-        while(stack.size()>0){
+        while (stack.size() > 0) {
             System.out.println(stack.pop());
         }
     }
@@ -259,6 +260,35 @@ public class SingleLinkedList {
         list.showLinkedList();
         //reversePrint(list.headNode);
     }
+
+    /**
+     * 判断链表是否有环
+     * 思路：采用两个指针，开始分别指向头结点，然后向后移动，第一个指针步长为1，第二个指针步长为2，如果有环，两个指针一定会相遇
+     * 时间复杂度：O(n);空间复杂度：O(1)
+     *
+     * @param head
+     * @return
+     */
+    public static boolean isCycle(Node head) {
+        Node p1 = head;
+        Node p2 = head;
+        while (p2 != null && p2.next != null) {
+            p1 = p1.next;
+            p2 = p2.next.next;
+            if (p1 == p2) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /*public static int getCycleLength(Node head) {
+        int len=0;
+        if (isCycle(head)) {
+
+        }
+        return -1;
+    }*/
 }
 
 class Node {
