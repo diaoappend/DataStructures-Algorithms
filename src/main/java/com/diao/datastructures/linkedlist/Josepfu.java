@@ -30,7 +30,7 @@ public class Josepfu {
                 first.setNext(first);
                 curBoy = first;
             } else {
-                //从插入第二个节点开始，先将curBoy节点的next域指向新节点；新节点的next域指向first；然后curBoy后移，指向新节点
+                //从插入第二个节点开始，先将curBoy节点的next域指向新节点（因为first节点不能动）；新节点的next域指向first；然后curBoy后移，指向新节点
                 curBoy.setNext(boy);
                 boy.setNext(first);
                 curBoy = boy;//curBoy辅助指针后移
