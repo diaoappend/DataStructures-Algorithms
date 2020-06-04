@@ -15,8 +15,8 @@ public class CircleArrayQueue {
     public CircleArrayQueue(int arrMaxSize) {
         maxSize = arrMaxSize;
         arr = new Object[maxSize];
-        front = 0;//指向队列头部数据的前一个位置
-        rear = 0;//直接指向队列尾部数据
+        front = 0;//指向队列头部数据
+        rear = 0;//指向队列尾部数据的后一个位置
     }
     //判断队列是否满
     public boolean isFull() {
