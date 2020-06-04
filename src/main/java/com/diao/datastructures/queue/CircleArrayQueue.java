@@ -33,7 +33,7 @@ public class CircleArrayQueue {
             return;
         }else {
             arr[rear]=obj;
-            rear=(rear+1)%maxSize;//队尾指针后移
+            rear=(rear+1)%maxSize;//队尾指针后移，对maxSize取余保证rear的值永远小于maxSize
         }
     }
 
@@ -42,7 +42,7 @@ public class CircleArrayQueue {
             throw new RuntimeException("队列已空");
         }else{
             Object obj =arr[front];//取数
-            front=(front+1)%maxSize;//队首指针后移
+            front=(front+1)%maxSize;//队首指针后移，对maxSize取余保证front的值永远小于maxSize
             return obj;
         }
     }
@@ -58,7 +58,8 @@ public class CircleArrayQueue {
             }
         }
     }
-    //求出当前队列有效数据个数
+    //求出当前队列有效数据个数,因为是循环队列，rear的值可能比front小，rear+maxSize保证rear一定以front大
+    //然后对maxSize取余就是元素数量
     public int getCount(){
         return (rear+maxSize-front)%maxSize;
     }
