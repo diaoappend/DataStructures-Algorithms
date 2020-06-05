@@ -20,35 +20,48 @@ public class test {
         rear=0;
         arr = new Object[maxSize];
     }
+
     public boolean isFull(){
-       return (rear+1)%maxSize==front;
+        return (rear+1)%maxSize==front;
     }
+
     public boolean isEmpty(){
         return rear==front;
     }
-
-    public void add(Object obj){
-        if(!isFull()){
-            arr[rear]=obj;
+    public void add(Object o){
+        if (!isFull()){
+            arr[rear]=0;
             rear=(rear+1)%maxSize;
+        }else{
+            throw new RuntimeException("队列已满");
         }
     }
 
-    public Object getQueue(){
-        if(!isEmpty()){
-            Object o = arr[front];
+    public Object get(){
+        if (!isEmpty()){
+            Object tmp = arr[front];
             front=(front+1)%maxSize;
-            return o;
-        } else{
+            return tmp;
+        }else{
             throw new RuntimeException("队列为空");
         }
     }
-    public void showQueue(){
-        for (int i=front;i<front+getCount();i++){
-            System.out.println(arr[i]);
-        }
-    }
+
     public int getCount(){
         return (rear+maxSize-front)%maxSize;
+    }
+
+    public void showQueue(){
+        for (int i=front;i<front+getCount();i++){
+            System.out.println(arr[i%maxSize]);
+        }
+    }
+
+    public Object getHead(){
+        if (!isEmpty()){
+            return arr[front];
+        }else{
+            throw new RuntimeException("空");
+        }
     }
 }
