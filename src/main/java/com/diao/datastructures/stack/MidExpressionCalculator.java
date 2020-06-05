@@ -6,7 +6,7 @@ package com.diao.datastructures.stack;
  * @description:计算中缀表达式的值（不含括号）
  * @version: 1.0
  */
-public class Calculator {
+public class MidExpressionCalculator {
     public int CalculatorExpression(String expression) {
         ArrayStack numStack = new ArrayStack(10);
         ArrayStack operStack = new ArrayStack(10);
@@ -86,7 +86,7 @@ public class Calculator {
 
     public static void main(String[] args) {
         String expression = "700*2-5+1";//定义一个表达式
-        Calculator calculator = new Calculator();
+        MidExpressionCalculator calculator = new MidExpressionCalculator();
         int result = calculator.CalculatorExpression(expression);
         System.out.printf("表达式:%s=%d", expression, result);
     }

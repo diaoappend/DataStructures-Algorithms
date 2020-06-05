@@ -9,13 +9,15 @@ package com.diao.datastructures.queue;
 
 /**
  * a)将尾指针后移：rear+1，当rear=front时表示队列为空
- * b)若尾指针rear小于队列的最大下标maxSize-1，表示队列未满，则将数据存入数组中下标为rear的位置，否则无法插入数据
+ * b)若尾指针rear小于队列的最大下标(maxSize-1)，表示队列未满，则将数据存入数组中下标为rear的位置，否则无法插入数据
  */
 public class ArrayQueue {
+    //一容量一数组两指针
     private int maxSize;//队列容量
+    private Object[] arr;
     private int rear;//队尾指针
     private int front;//队首指针
-    private Object[] arr;
+
 
     //构造一个数组，需要传入一个容量
     public ArrayQueue(int arrMaxSize) {
@@ -62,6 +64,7 @@ public class ArrayQueue {
                 System.out.println(arr[i]);
             }
         }
+
     }
     //显示队列头数据
     public Object headQueue(){
@@ -74,11 +77,11 @@ public class ArrayQueue {
     }
 
     public static void main(String[] args) {
-        ArrayQueue queue = new ArrayQueue(10);
+        ArrayQueue queue = new ArrayQueue(3);
         queue.addQueue("元素1");
         queue.addQueue("元素2");
         queue.addQueue("元素3");
-        queue.getQueue();
+        //queue.getQueue();
         queue.showDatas();
         System.out.println(queue.headQueue());
 

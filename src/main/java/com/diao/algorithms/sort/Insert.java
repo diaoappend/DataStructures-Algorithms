@@ -34,12 +34,15 @@ public class Insert {
             //2.arr[insertIndex] > insertVal 待插入的数小于前面的数，说明还没找到插入位置（因为是升序排，所以待插入值前面的值都是升序排好的，所以只要找到前面数小于待插入数时即找到位置）
             //3.需要将arr[insertIndex]后移：arr[insertIndex + 1] = arr[insertIndex]
             //4.insertIndex前移继续找位置
-            while (insertIndex >= 0 && arr[insertIndex] > insertVal) {
+            while (insertIndex >= 0 && arr[insertIndex] > insertVal) {//如果需要降序排，只需要将这里的">"改为"<"即可
                 arr[insertIndex + 1] = arr[insertIndex];
                 insertIndex--;
             }
             //当退出while循环时，说明insertVal的位置已经找到，就是insertIndex+1
-            arr[insertIndex + 1] = insertVal;
+            //优化，如果待插入元素的位置不用动，就不必赋值，因为arr[insertIndex + 1]的值本来就是insertVal
+           if (insertIndex+1!=i){
+               arr[insertIndex + 1] = insertVal;
+           }
         }
         return arr;
     }

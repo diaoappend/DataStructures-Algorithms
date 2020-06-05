@@ -3,7 +3,7 @@ package com.diao.algorithms.recursion;
 /**
  * @author: Chenzhidiao
  * @date: 2020/1/8 9:01
- * @description:
+ * @description:阶乘
  * @version: 1.0
  */
 public class RecursionDemo {

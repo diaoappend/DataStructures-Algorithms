@@ -10,14 +10,14 @@ import java.util.Stack;
  * @description:计算后缀表达式（也叫逆波兰表达式）
  * @version: 1.0
  */
-public class SuffixCalculator {
+public class SuffixExpressionCalculator {
     public static void main(String[] args) {
         //中缀表达式：(3+4)*5-6，对应的后缀表达式(即逆波兰表达式)："3 4 + 5 * 6 -"(中间用了空格进行分割，便于使用)
         String suffixExpression = "3 4 + 5 * 6 -";
         /**
          * 逆波兰表达式的计算思路：
          * 1.扫描表达式，如果是数直接入栈；
-         * 2.如果是运算符，从栈中弹出两个数进行运算，然后将结果入栈；
+         * 2.如果是运算符，从数栈中弹出两个数进行运算，然后将结果入栈；
          * 3.最后栈中剩余的一个值即为表达式的值
          */
         List<String> list = getListString(suffixExpression);
@@ -46,7 +46,7 @@ public class SuffixCalculator {
      * @return
      */
    public static int calculator(List<String> ls){
-       Stack<String> stack = new Stack<>();
+       Stack<String> stack = new Stack<String>();
        //遍历ls
        for (String item : ls) {
            if (item.matches("\\d+")){//如果是数直接入栈

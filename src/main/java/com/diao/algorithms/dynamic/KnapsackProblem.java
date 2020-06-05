@@ -60,7 +60,9 @@ public class KnapsackProblem {
         while (i>0&&j>0){
             if (path[i][j]==1){
                 System.out.printf("第%d个商品放入到背包\n", i);
-                j-=weight[i-1];//每放入一个物品，背包容量就要减去物品的容量
+                //每放入一个物品，背包容量就要减去物品的容量,因为二维数组v和path是通过背包容量m+1和物品数量n+1得到
+                //所以这里j应该减去weigh[i-1]的容量
+                j-=weight[i-1];
             }
             i--;
         }
