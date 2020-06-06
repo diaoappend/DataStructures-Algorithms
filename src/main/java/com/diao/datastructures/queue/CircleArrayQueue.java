@@ -13,7 +13,7 @@ public class CircleArrayQueue {
     private Object[] arr;
     //构造一个数组，需要传入一个容量
     public CircleArrayQueue(int arrMaxSize) {
-        maxSize = arrMaxSize;
+        maxSize = arrMaxSize+1;//实际存储数组的容量要比传入的容量大1，
         arr = new Object[maxSize];
         front = 0;//指向队列头部数据
         rear = 0;//指向队列尾部数据的后一个位置
@@ -73,7 +73,7 @@ public class CircleArrayQueue {
     }
 
     public static void main(String[] args) {
-        CircleArrayQueue queue = new CircleArrayQueue(4);
+        CircleArrayQueue queue = new CircleArrayQueue(3);
         queue.addQueue("元素1");
         queue.addQueue("元素2");
         queue.addQueue("元素3");
@@ -85,12 +85,15 @@ public class CircleArrayQueue {
         queue.addQueue("元素6");
         System.out.println(queue.rear);
         System.out.println(queue.front);
-        /*queue.getQueue();
+        queue.getQueue();
         queue.getQueue();
         queue.addQueue("元素4");
-        queue.addQueue("元素5");*/
+        queue.addQueue("元素5");
+        System.out.println(queue.getCount());;
         queue.showDatas();
         System.out.println(queue.headQueue());
 
     }
 }
+
+
