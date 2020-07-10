@@ -1,5 +1,7 @@
 package com.diao.datastructures.linkedlist;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
 /**
@@ -12,7 +14,7 @@ import java.util.Stack;
 public class SingleLinkedList {
 
     //初始化一个头节点
-    private Node headNode = new Node(0, "", "");
+    private Node headNode = new Node(0);
 
     public Node getHeadNode() {
         return headNode;
@@ -71,6 +73,7 @@ public class SingleLinkedList {
         if (flag) {
             throw new RuntimeException("插入节点已存在");
         } else {
+            //这里需要注意，要先将新增结点的next域指向tmp结点的next域，否则直接将tmp的next域指向新增结点会导致tmp的next域丢失
             node.next = tem.next;
             tem.next = node;
         }
@@ -100,8 +103,7 @@ public class SingleLinkedList {
             tem = tem.next;
         }
         if (flag) {
-            tem.nickname = node.nickname;
-            tem.name = node.name;
+
             return;
         } else {
             System.out.println("没有找到指定编号的节点");
@@ -177,26 +179,27 @@ public class SingleLinkedList {
 
     /**
      * 获取倒数第index个节点
-     *
+     * 通过一次遍历获取
+     * 定义两个指针fast和slow分别指向头节点，先让fast指针后移index次，然后两个指针同时向后移动，
+     * 当fast指针指向null时，slow指向的结点就是倒数第index个结点
      * @param headNode
      * @param index
      * @return
      */
     public static Node getLastIndexNode(Node headNode, int index) {
-        if (headNode.next == null) {
+        if (headNode.next == null||index<=0) {
             return null;
         }
-        int length = getLength(headNode);
-        //index校验
-        if (index <= 0 || index > length) {
-            return null;
-        } else {
-            Node current = headNode.next;
-            for (int i = 0; i < length - index; i++) {
-                current = current.next;
-            }
-            return current;
+        Node fast=headNode;
+        Node slow=headNode;
+        for (int i=0;i<index;i++){
+            fast=fast.next;
         }
+        while (fast!=null){
+            fast=fast.next;
+            slow=slow.next;
+        }
+        return slow;
     }
 
     /**
@@ -217,8 +220,8 @@ public class SingleLinkedList {
         if (oldHeadNode.next == null || oldHeadNode.next.next == null) {
             return;
         }
-        //初始化一个新的头节点reverseHeadNode,并定义当前节点current和其下一个节点next
-        Node reverseHeadNode = new Node(0, "", "");
+        //初始化一个新的头节点reverseHeadNode,并定义当前节点current为旧链表第一个结点，定义辅助节点next为null
+        Node reverseHeadNode = new Node(0);
         Node current = oldHeadNode.next;
         Node next = null;
         //遍历原来的链表，每遍历一个节点，将其取出，并放在新的链表reverseHead的最前端
@@ -252,15 +255,6 @@ public class SingleLinkedList {
         }
     }
 
-    public static void main(String[] args) {
-        SingleLinkedList list = new SingleLinkedList();
-        list.addNodeByNo(new Node(1, "songjianng", "jishiyu"));
-        list.addNodeByNo(new Node(3, "wuyong", "zhiduoxing"));
-        list.addNodeByNo(new Node(2, "lujunyi", "yuqilin"));
-        list.showLinkedList();
-        //reversePrint(list.headNode);
-    }
-
     /**
      * 判断链表是否有环
      * 思路：采用两个指针，开始分别指向头结点，然后向后移动，第一个指针步长为1，第二个指针步长为2，如果有环，两个指针一定会相遇
@@ -270,45 +264,160 @@ public class SingleLinkedList {
      * @return
      */
     public static boolean isCycle(Node head) {
-        Node p1 = head;
-        Node p2 = head;
-        while (p2 != null && p2.next != null) {
-            p1 = p1.next;
-            p2 = p2.next.next;
-            if (p1 == p2) {
+        if (head==null||head.next==null){
+            return false;
+        }
+        Node slow = head;
+        Node fast = head;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+            if (slow == fast) {
                 return true;
             }
         }
         return false;
     }
-
-    /*public static int getCycleLength(Node head) {
-        int len=0;
-        if (isCycle(head)) {
-
+    /**
+     * 如果链表有环，查找入环结点
+     * 思路：假设从第一个节点到入环结点的距离为L，入环结点到两指针相遇结点的距离为X，环的周长为R，那么：
+     * 快指针走的距离为：L+X+nR(n为转的圈数)
+     * 慢指针走的距离为：L+X
+     * 根据快指针的速度为慢指针速度的2倍，得快指针走的距离为慢指针距离的2倍，有：
+     * 2(L+X)=L+X+nR 即：L=nR-X=(n-1)R+(R-X)
+     * 从上面的结果来看：R-X正好是环的长度-入环点到相遇点的长度，那么：
+     * 当两个指针相遇时，再加一个指针从起点开始向后移动，同时快指针或慢指针也向后移动，那么新加的指针和慢指针(快指针)相遇的点就是入环结点
+     * 因为快指针(或慢指针)不管转了几圈，相对于相遇节点的位移值都是R-X
+     */
+    public static Node getInCycleNode(Node head){
+        if (head==null||head.next==null){
+            return null;
         }
-        return -1;
-    }*/
+        Node fast=head;
+        Node slow=head;
+        while (fast!=null&&fast.next!=null){
+            fast=fast.next.next;
+            slow=slow.next;
+            if(fast==slow){//第一次相遇，有环
+               break;
+            }
+        }
+        //增加一个指针，从head开始
+        Node tmp=head;
+        //slow和tmp指针继续前进
+        while (slow!=null){
+            slow=slow.next;
+            tmp=tmp.next;
+            if (slow==tmp){//新增指针和slow指针相遇的地方就是入环点
+               break;
+            }
+        }
+        //如果没有环，slow最终为null，返回null；如果有环，slow最终为入环点
+        return slow;
+    }
+
+    /**
+     * 如果链表有环，求环的长度
+     * 思路：当快慢指针第一次相遇时，证明有环，此时让两个指针继续向前走，当第二次相遇时，由于快指针每次比慢指针多移动1个距离，那么第二次相遇时
+     * 快指针正好比慢指针多移动了一圈距离
+     * @param head
+     * @return
+     */
+    public static int getCycleLength(Node head) {
+        if (head==null||head.next==null){
+            return -1;
+        }
+        int len=-1;//环的长度，默认为-1
+        int count=0;//记录相遇次数
+        Node p1 = head;
+        Node p2 = head;
+        while (p1.next!=null&&p1.next.next!=null){
+            p1=p1.next.next;
+            p2=p2.next;
+            if (p1 == p2) {//第一次相遇
+                count++;
+                if (count==1){
+                    len=0;
+                }
+            }
+            if (count==1){
+                len++;
+            }else if (count==2){//当第二次相遇时，跳出循环，len的值就是环的长度
+                break;
+            }
+        }
+        return len;
+    }
+
+    /**
+     * 求链表的中间结点
+     * 思路：定义两个快慢指针，快指针步长为2，慢指针步长为1
+     * ①当快指针为null时，说明链表长度为奇数，slow指针所指就是链表的中间结点
+     * ②当快指针的next域为null时，说明链表长度为偶数，slow指针和slow的next域对应的两个结点就是链表的中间结点
+     * @param head
+     * @return
+     */
+    public static List<Node> getMidNode(Node head){
+        ArrayList<Node> result = new ArrayList<Node>();
+        Node fast=head;
+        Node slow=head;
+        while (fast!=null&&fast.next!=null){
+            fast=fast.next.next;
+            slow=slow.next;
+        }
+        //如果fast为null，说明链表长度为奇数，中间结点有1个，为slow
+        if (fast==null){
+            result.add(slow);
+
+        }else{//如果fast.next为null，说明链表长度为偶数，中间结点有两个，slow和slow.next
+            result.add(slow);
+            result.add(slow.next);
+        }
+        return result;
+    }
+
+    /**
+     * 合并两个有序链表
+     * 思路：
+     * 1.定义两个指针分别指向两个链表的第一个结点，判断两个结点值的大小，将值小的指针向后移动，直到指针对应的结点值大于值大的结点为止
+     * 2.定义一个辅助结点，
+     * @param args
+     */
+
+    public static void main(String[] args) {
+        SingleLinkedList list = new SingleLinkedList();
+        /*list.addNodeByNo(new Node(1));
+        list.addNodeByNo(new Node(3));
+        list.addNodeByNo(new Node(2));
+        list.showLinkedList();*/
+        //reversePrint(list.headNode);
+        Node head = list.headNode;
+        Node node1 = new Node(1);
+        Node node2 = new Node(2);
+        Node node3 = new Node(3);
+        Node node4 = new Node(4);
+        head.next=node1;
+        node1.next=node2;
+        node2.next=node3;
+        //node3.next=node4;
+        //node4.next=node2;
+
+        System.out.println(getMidNode(head));
+    }
 }
 
 class Node {
     int no;
-    String name;
-    String nickname;
     Node next;
 
-    public Node(int no, String name, String nickname) {
+    public Node(int no) {
         this.no = no;
-        this.name = name;
-        this.nickname = nickname;
     }
 
     @Override
     public String toString() {
         return "Node{" +
                 "no=" + no +
-                ", name='" + name + '\'' +
-                ", nickname='" + nickname + '\'' +
                 '}';
     }
 }
