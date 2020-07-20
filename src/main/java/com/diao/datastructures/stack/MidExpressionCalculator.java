@@ -8,13 +8,14 @@ package com.diao.datastructures.stack;
  */
 public class MidExpressionCalculator {
     public int CalculatorExpression(String expression) {
+        //定义一个数栈和一个符号栈
         ArrayStack numStack = new ArrayStack(10);
         ArrayStack operStack = new ArrayStack(10);
-        int index = 0;//用于扫描
-        int num1 = 0;
-        int num2 = 0;
-        int oper = 0;
-        int result = 0;
+        int index = 0;//用于扫描表达式
+        int num1 = 0;//接收数栈pop的第一个数
+        int num2 = 0;//接收数栈pop的第二个数
+        int oper = 0;//接收符号栈pop的元素
+        int result = 0;//运算结果
         char ch = ' ';//将每次扫描到的char保存到ch
         String keepNum = "";//用于拼接多位数
         while (true) {
@@ -39,17 +40,16 @@ public class MidExpressionCalculator {
                         operStack.push(ch);
                     }
                 } else {
-                    operStack.push(ch);//为空直接入栈
+                    operStack.push(ch);//符号栈为空直接入栈
                 }
-            } else {
-                //如果是数，则直接入数栈，这里需要注意的是，扫描到的数字为char类型，和真正的数字之间差48，需要将扫描到的数字-48
+            } else {//如果扫描到数字
                 /**
                  * 多位数处理思路：
                  * 1.当处理多位数时，不能发现是一个数就立即入栈，因为可能是多位数
                  * 2.在处理数时，需要向expression的表达式的index向后再看一位，如果是数则继续扫描，如果是符号则入栈
                  * 3.因此需要定义一个字符串变量用于拼接
                  */
-                //numStack.push(ch - 48);
+                //需要注意的是，扫描到的数字为char类型，和真正的数字之间差48，需要将扫描到的数字-48，numStack.push(ch - 48);如果用Integer.parseInt(ch)则不需要减48
                 //处理多位数
                 keepNum += ch;
                 //如果ch已经是expression的最后一位，则直接入栈，不需要看下一位
@@ -85,7 +85,7 @@ public class MidExpressionCalculator {
     }
 
     public static void main(String[] args) {
-        String expression = "700*2-5+1";//定义一个表达式
+        String expression = "70*2-50+18";//定义一个表达式
         MidExpressionCalculator calculator = new MidExpressionCalculator();
         int result = calculator.CalculatorExpression(expression);
         System.out.printf("表达式:%s=%d", expression, result);

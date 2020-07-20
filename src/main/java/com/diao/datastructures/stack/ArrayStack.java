@@ -46,6 +46,11 @@ public class ArrayStack {
         return value;
     }
 
+    //查看栈顶元素的方法，只查看，不弹出
+    public int peak() {
+        return stack[top];
+    }
+
     //遍历栈,需要从栈顶开始显示
     public void list() {
         if (isEmpty()) {
@@ -73,11 +78,6 @@ public class ArrayStack {
     //判断扫描到的是不是一个运算符
     public boolean isOper(char val) {
         return val == '+' || val == '-' || val == '*' || val == '/' || val == '(' || val == ')';
-    }
-
-    //查看栈顶元素的方法，只查看，不弹出
-    public int peak() {
-        return stack[top];
     }
 
     //计算两个值的方法，从数栈中取两个值，符号栈中取一个进行计算
